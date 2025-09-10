@@ -1,0 +1,28 @@
+services:
+  location:
+    build: 
+      context: .
+      dockerfile: ./location/Dockerfile
+    container_name: location_service
+    ports:
+      - "50051:50051"
+
+  weather:
+    build: 
+      context: .
+      dockerfile: ./climate/Dockerfile
+    container_name: weather_service
+    ports:
+      - "50052:50052"
+
+  gateway:
+    build: 
+      context: .
+      dockerfile: ./gateway/Dockerfile
+    container_name: gateway_service
+    ports:
+      - "3000:3000"
+    depends_on:
+      - location
+      - weather
+

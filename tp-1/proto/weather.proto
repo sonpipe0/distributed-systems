@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package weather;
+
+// Reutilizamos una ubicación simplificada
+message Location {
+  string country = 1;
+  string city = 2;
+}
+
+message WeatherRequest {
+  Location location = 1;
+}
+
+message Weather {
+  double temperature_c = 1;
+  string description = 2;
+}
+
+service WeatherService {
+  rpc GetWeather(WeatherRequest) returns (Weather);
+}
+

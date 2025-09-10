@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package location;
+
+// Solicitud con una IP para resolver su localización
+message LocationRequest {
+  string ip = 1;
+}
+
+// Respuesta con datos mínimos de ubicación
+message Location {
+  string country = 1;
+  string city = 2;
+}
+
+service LocationService {
+  rpc GetLocation(LocationRequest) returns (Location);
+}
+

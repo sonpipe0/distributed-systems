@@ -1,0 +1,40 @@
+# General
+.DS_Store
+*.log
+*.tmp
+*.swp
+.env
+.env.*
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.python-version
+.venv/
+venv/
+.mypy_cache/
+.pytest_cache/
+coverage/
+
+# gRPC Python stubs (generados desde proto)
+tp-1/location/*_pb2.py
+tp-1/location/*_pb2_grpc.py
+tp-1/climate/*_pb2.py
+tp-1/climate/*_pb2_grpc.py
+
+# Node / TypeScript
+node_modules/
+tp-1/gateway/node_modules/
+dist/
+build/
+*.tsbuildinfo
+
+# IDE / Editor
+.idea/
+.vscode/
+*.code-workspace
+
+# Docker
+*.tar
+
