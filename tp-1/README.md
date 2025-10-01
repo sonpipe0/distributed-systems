@@ -1,5 +1,10 @@
 # TP1 – Weather App (Mockup)
 
+
+github: [link a github](https://sanlorenzo.com.ar/)
+
+te lo mandamos por mail jaja vas a necesitar permisos para el github no lo apretes.
+
 ## Estructura
 - **location/** → Servicio gRPC en Python para localización por IP.
 - **climate/** → Servicio gRPC en Python para clima (mock).
