@@ -12,7 +12,7 @@ COPY proto/ ./proto/
 COPY location/location_service.py .
 
 # Generar archivos proto
-RUN python -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. ./proto/location.proto
+RUN python -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. ./proto/location.proto ./proto/common.proto
 
 CMD ["python", "location_service.py"]
 

@@ -2,14 +2,10 @@ syntax = "proto3";
 
 package weather;
 
-// Reutilizamos una ubicación simplificada
-message Location {
-  string country = 1;
-  string city = 2;
-}
+import "common.proto";
 
 message WeatherRequest {
-  Location location = 1;
+  common.Location location = 1;
 }
 
 message Weather {

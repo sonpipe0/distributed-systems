@@ -6,10 +6,14 @@ import requests
 try:
     import location_pb2
     import location_pb2_grpc
+    import common_pb2
+    import common_pb2_grpc
     HAS_PROTO = True
 except ImportError:
     location_pb2 = None
     location_pb2_grpc = None
+    common_pb2 = None
+    common_pb2_grpc = None
     HAS_PROTO = False
 
 
@@ -26,7 +30,7 @@ if HAS_PROTO:
             if not ip_address:
                 context.set_code(grpc.StatusCode.INVALID_ARGUMENT)
                 context.set_details("IP address is required")
-                return location_pb2.Location()
+                return common_pb2.Location()
             
             try:
                 url = f"https://ipwho.is/{ip_address}"
@@ -39,7 +43,7 @@ if HAS_PROTO:
                 if not data.get("success", False):
                     context.set_code(grpc.StatusCode.NOT_FOUND)
                     context.set_details(f"Could not resolve location for IP: {ip_address}")
-                    return location_pb2.Location()
+                    return common_pb2.Location()
                 
                
                 country = data.get("country", "Unknown")
@@ -48,7 +52,7 @@ if HAS_PROTO:
                 longitude = data.get("longitude", 0.0)
                 timezone_id = data.get("timezone", {}).get("id", "UTC")
                 
-                return location_pb2.Location(
+                return common_pb2.Location(
                     country=country,
                     city=city,
                     latitude=latitude,
@@ -59,11 +63,11 @@ if HAS_PROTO:
             except requests.exceptions.RequestException as e:
                 context.set_code(grpc.StatusCode.UNAVAILABLE)
                 context.set_details(f"Error calling ipwho.is API: {str(e)}")
-                return location_pb2.Location()
+                return common_pb2.Location()
             except Exception as e:
                 context.set_code(grpc.StatusCode.INTERNAL)
                 context.set_details(f"Internal error: {str(e)}")
-                return location_pb2.Location()
+                return common_pb2.Location()
 
     def add_location_service(server):
         location_pb2_grpc.add_LocationServiceServicer_to_server(LocationService(), server)
