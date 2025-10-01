@@ -1,5 +1,6 @@
 import grpc
 from concurrent import futures
+import requests
 
 # Intentamos importar stubs generados desde los .proto
 try:
@@ -16,8 +17,53 @@ except ImportError:
 if HAS_PROTO:
     class LocationService(location_pb2_grpc.LocationServiceServicer):
         def GetLocation(self, request, context):
-            # Implementación mock: devuelve una ubicación fija
-            return location_pb2.Location(country="AR", city="Buenos Aires")
+            """
+            Obtiene información de ubicación desde ipwho.is para una IP dada.
+            Retorna latitude, longitude y timezone necesarios para el servicio de clima.
+            """
+            ip_address = request.ip
+            
+            if not ip_address:
+                context.set_code(grpc.StatusCode.INVALID_ARGUMENT)
+                context.set_details("IP address is required")
+                return location_pb2.Location()
+            
+            try:
+                url = f"https://ipwho.is/{ip_address}"
+                response = requests.get(url, timeout=10)
+                response.raise_for_status()
+                
+                data = response.json()
+                
+                
+                if not data.get("success", False):
+                    context.set_code(grpc.StatusCode.NOT_FOUND)
+                    context.set_details(f"Could not resolve location for IP: {ip_address}")
+                    return location_pb2.Location()
+                
+               
+                country = data.get("country", "Unknown")
+                city = data.get("city", "Unknown")
+                latitude = data.get("latitude", 0.0)
+                longitude = data.get("longitude", 0.0)
+                timezone_id = data.get("timezone", {}).get("id", "UTC")
+                
+                return location_pb2.Location(
+                    country=country,
+                    city=city,
+                    latitude=latitude,
+                    longitude=longitude,
+                    timezone=timezone_id
+                )
+                
+            except requests.exceptions.RequestException as e:
+                context.set_code(grpc.StatusCode.UNAVAILABLE)
+                context.set_details(f"Error calling ipwho.is API: {str(e)}")
+                return location_pb2.Location()
+            except Exception as e:
+                context.set_code(grpc.StatusCode.INTERNAL)
+                context.set_details(f"Internal error: {str(e)}")
+                return location_pb2.Location()
 
     def add_location_service(server):
         location_pb2_grpc.add_LocationServiceServicer_to_server(LocationService(), server)

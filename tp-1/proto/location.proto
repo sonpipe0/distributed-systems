@@ -7,10 +7,13 @@ message LocationRequest {
   string ip = 1;
 }
 
-// Respuesta con datos mínimos de ubicación
+// Respuesta con datos de ubicación necesarios para el servicio de clima
 message Location {
   string country = 1;
   string city = 2;
+  double latitude = 3;
+  double longitude = 4;
+  string timezone = 5;  // Timezone ID (e.g., "America/Los_Angeles")
 }
 
 service LocationService {
