@@ -2,17 +2,10 @@ syntax = "proto3";
 
 package weather;
 
-// Reutilizamos una ubicación simplificada
-message Location {
-  string country = 1;
-  string city = 2;
-  double latitude = 3;
-  double longitude = 4;
-  string timezone = 5;  // Timezone ID (e.g., "America/Los_Angeles")
-}
+import "common.proto";
 
 message WeatherRequest {
-  Location location = 1;
+  common.Location location = 1;
 }
 
 message Weather {

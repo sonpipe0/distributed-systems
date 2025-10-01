@@ -8,6 +8,8 @@ Permite probar dos flujos:
 import grpc
 import weather_pb2
 import weather_pb2_grpc
+import common_pb2
+import common_pb2_grpc
 
 
 def test_weather_service_by_coords(latitude: float, longitude: float, city: str = "", country: str = ""):
@@ -15,7 +17,7 @@ def test_weather_service_by_coords(latitude: float, longitude: float, city: str 
     stub = weather_pb2_grpc.WeatherServiceStub(channel)
 
     req = weather_pb2.WeatherRequest(
-        location=weather_pb2.Location(
+        location=common_pb2.Location(
             country=country,
             city=city,
             latitude=latitude,
@@ -43,7 +45,7 @@ def test_weather_service_by_city(city: str, country: str = ""):
     stub = weather_pb2_grpc.WeatherServiceStub(channel)
 
     req = weather_pb2.WeatherRequest(
-        location=weather_pb2.Location(
+        location=common_pb2.Location(
             country=country,
             city=city,
             latitude=0.0,

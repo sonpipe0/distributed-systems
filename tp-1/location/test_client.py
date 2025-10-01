@@ -5,6 +5,8 @@ Para poder testearlo le manda un location Request con una IP y muestra la respue
 import grpc
 import location_pb2
 import location_pb2_grpc
+import common_pb2
+import common_pb2_grpc
 
 
 def test_location_service(ip_address):

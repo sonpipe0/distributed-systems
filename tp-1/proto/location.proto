@@ -2,21 +2,14 @@ syntax = "proto3";
 
 package location;
 
+import "common.proto";
+
 // Solicitud con una IP para resolver su localización
 message LocationRequest {
   string ip = 1;
 }
 
-// Respuesta con datos de ubicación necesarios para el servicio de clima
-message Location {
-  string country = 1;
-  string city = 2;
-  double latitude = 3;
-  double longitude = 4;
-  string timezone = 5;  // Timezone ID (e.g., "America/Los_Angeles")
-}
-
 service LocationService {
-  rpc GetLocation(LocationRequest) returns (Location);
+  rpc GetLocation(LocationRequest) returns (common.Location);
 }
 

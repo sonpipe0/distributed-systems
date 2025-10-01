@@ -12,7 +12,7 @@ COPY proto/ ./proto/
 COPY climate/weather_service.py .
 
 # Generar archivos proto
-RUN python -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. ./proto/weather.proto
+RUN python -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. ./proto/weather.proto ./proto/common.proto
 
 CMD ["python", "weather_service.py"]
 

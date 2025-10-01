@@ -9,10 +9,14 @@ from retry_requests import retry
 try:
     import weather_pb2
     import weather_pb2_grpc
+    import common_pb2
+    import common_pb2_grpc
     HAS_PROTO = True
 except ImportError:
     weather_pb2 = None
     weather_pb2_grpc = None
+    common_pb2 = None
+    common_pb2_grpc = None
     HAS_PROTO = False
 
 
