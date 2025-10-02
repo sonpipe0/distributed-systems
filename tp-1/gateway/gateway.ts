@@ -21,9 +21,8 @@ const weatherClient = new weatherPkg.WeatherService(
   grpc.credentials.createInsecure()
 );
 
-app.get("/weather/:ip", (req, res) => {
-  // Ejemplo ilustrativo de encadenar llamados (location -> weather)
-  const ip = req.params.ip;
+app.get("/", (req, res) => {
+  const ip = req.query.ip || req.ip;
 
   locationClient.GetLocation({ ip }, (err: any, loc: any) => {
     if (err) return res.status(502).json({ error: String(err) });

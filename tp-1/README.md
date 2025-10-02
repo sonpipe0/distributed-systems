@@ -1,9 +1,7 @@
-# TP1 – Weather App (Mockup)
-
-
-github: [link a github](https://sanlorenzo.com.ar/)
-
-te lo mandamos por mail jaja vas a necesitar permisos para el github no lo apretes.
+# TP1 – Weather App 
+-  Manuel Lostalo
+- Felipe Fernández Cronenbold
+- Pedro de Foronda
 
 ## Estructura
 - **location/** → Servicio gRPC en Python para localización por IP.
@@ -33,8 +31,8 @@ cd location && source .venv/bin/activate && pip install -r requirements.txt && d
 cd gateway && npm install && cd ..
 
 # Generar archivos proto
-cd climate && source .venv/bin/activate && python -m grpc_tools.protoc -I../proto --python_out=. --grpc_python_out=. ../proto/weather.proto && deactivate && cd ..
-cd location && source .venv/bin/activate && python -m grpc_tools.protoc -I../proto --python_out=. --grpc_python_out=. ../proto/location.proto && deactivate && cd ..
+cd climate && source .venv/bin/activate && python -m grpc_tools.protoc -I../proto --python_out=. --grpc_python_out=. ../proto/weather.proto ../proto/common.proto && deactivate && cd ..
+cd location && source .venv/bin/activate && python -m grpc_tools.protoc -I../proto --python_out=. --grpc_python_out=. ../proto/location.proto ../proto/common.proto && deactivate && cd ..
 ```
 
 ## Ejecutar servicios
